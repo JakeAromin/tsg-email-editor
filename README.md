@@ -115,3 +115,4 @@ $ npm run build
 ## License
 
 BSD 3-Clause
+"# tsg-email-editor" 
