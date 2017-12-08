@@ -6,6 +6,7 @@ define(function() {
     let tableStyle = opt.tableStyle || {};
     let cellStyle = opt.cellStyle || {};
     let bm = editor.BlockManager;
+    let rte = editor.RichTextEditor;
     for (let prop in tableStyle){
       tableStyleStr += `${prop}: ${tableStyle[prop]}; `;
     }
@@ -189,5 +190,77 @@ define(function() {
       content: listItem + listItem,
       attributes: {class:'fa fa-th-list'}
     });
+
+    bm.add('unEditableText', {
+        label: 'Un-Editable',
+        //category: opt.categoryLabel,
+        attributes: {class:'gjs-fonts gjs-f-text'},
+        content: {
+            title: 'Insert the iteration here',
+            type: 'text',
+            content: `<span contenteditable="false">If there are any mistakes 
+     or changes required to the above please 
+     contact us as soon as possible on</span> {{CALLCENTRENUMBER}} <span contenteditable="false">
+     and quote your reference which is {{CUSTOMERREF}}. You can also contact us via our website at <OURWEBSITE> particularly if you should have a change of address or contact phone numbers during the term of your contract.</span>`,
+            style: { padding: '10px' },
+            //activeOnRender: 1
+        },
+    });
+
+    bm.add('paymentDetails', {
+        label: 'Payment Details',
+        //category: opt.categoryLabel,
+        attributes: {class:'gjs-fonts gjs-f-text'},
+        content: {
+            title: 'Insert the iteration here',
+            type: 'text',
+            content: `<span contenteditable="false"><div>
+     {% for payment in paymentDetails %}
+         <div>{{ payment.date }}</div>
+         <div>{{ payment.ref }}</div>
+         {% else %}
+         <p> No payment details available against the account number. </p>
+     {% endfor %}
+     </div></span>`,
+            style: { padding: '10px' },
+            activeOnRender: 0
+        },
+    });
+
+    rte.add('mergeTags', {
+        icon: `<select class="gjs-field">
+                <option value="">- Select -</option>
+            <option value="<span contenteditable='false'>[[firstname]]</span>">FirstName</option>
+            <option value="[[lastname]]">LastName</option>
+            <option value="[[age]]">Age</option>
+        </select>`,
+        // Bind the 'result' on 'change' listener
+        event: 'change',
+        result: (rte, action) => rte.insertHTML(action.btn.firstChild.value),
+        // Reset the select on change
+        update: (rte, action) => { action.btn.firstChild.value = ""; }
+    });
+
+    /*
+    rte.add('fontSize', {
+        icon: `<select class="gjs-field">
+      <option>1</option>
+      <option>4</option>
+      <option>7</option>
+    </select>`,
+        // Bind the 'result' on 'change' listener
+        event: 'change',
+        result: (rte, action) => rte.exec('fontSize', action.btn.firstChild.value),
+        // Callback on any input change (mousedown, keydown, etc..)
+        update: (rte, action) => {
+            const value = rte.doc.queryCommandValue(action.name);
+            if (value != 'false') { // value is a string
+                action.btn.firstChild.value = value;
+            }
+        }
+    });
+
+
+    */
   };
 })

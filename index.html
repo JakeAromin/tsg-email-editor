@@ -10,8 +10,12 @@
     <link rel="stylesheet" href="./dist/grapesjs-preset-newsletter.css">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//unpkg.com/grapesjs@0.10.7/dist/grapes.min.js"></script>
+
+    <!--<script src="//unpkg.com/grapesjs@0.10.7/dist/grapes.min.js"></script>-->
+    <script src="./style/demo/grapes.min.js?v0.12.5"></script>
     <script src="./dist/grapesjs-preset-newsletter.min.js"></script>
+      <script src="./node_modules/ckeditor/ckeditor.js"></script>
+    <script src="./dist/grapesjs-plugin-ckeditor.min.js"></script>
 
     <script src="./src/toastr.min.js"></script>
     <script src="./src/ajaxable.min.js"></script>
@@ -531,13 +535,16 @@
 
 
     <script type="text/javascript">
-      var host = 'http://artf.github.io/grapesjs/';
+//      var host = 'http://artf.github.io/grapesjs/';
+      var host = './img/';
       var images = [
-        host + 'img/grapesjs-logo.png',
-        host + 'img/tmp-blocks.jpg',
-        host + 'img/tmp-tgl-images.jpg',
-        host + 'img/tmp-send-test.jpg',
-        host + 'img/tmp-devices.jpg',
+//        host + 'img/grapesjs-logo.png',
+//        host + 'img/tmp-blocks.jpg',
+//        host + 'img/tmp-tgl-images.jpg',
+//        host + 'img/tmp-send-test.jpg',
+//        host + 'img/tmp-devices.jpg',
+          host + 'debitsucess_logo.png',
+          host + 'barcode.png',
       ];
 
       // Set up GrapesJS editor with the Newsletter plugin
@@ -570,8 +577,75 @@
               margin: 0,
               padding: 0,
             }
-          }
+          },
+//          'gjs-plugin-ckeditor': {
+//              position: 'center',
+//              options: {
+//                  startupFocus: true,
+//                  extraAllowedContent: '*(*);*{*}', // Allows any class and any inline style
+//                  allowedContent: true, // Disable auto-formatting, class removing, etc.
+//                  enterMode: CKEDITOR.ENTER_BR,
+//                  extraPlugins: 'sharedspace,justify,colorbutton,panelbutton,font',
+//                  toolbar: [
+//                      { name: 'styles', items: ['Font', 'FontSize' ] },
+//                      ['Bold', 'Italic', 'Underline', 'Strike'],
+//                      {name: 'paragraph', items : [ 'NumberedList', 'BulletedList']},
+//                      {name: 'links', items: ['Link', 'Unlink']},
+//                      {name: 'colors', items: [ 'TextColor', 'BGColor' ]},
+//                  ],
+//              }
+//          },
         }
+      });
+
+
+      editor.setCustomRte({
+          enable: function(el, rte) {
+              // If already exists just focus
+              if (rte) {
+                  this.focus(el, rte); // implemented later
+                  return rte;
+              }
+
+              // CKEditor initialization
+              rte = CKEDITOR.inline(el, {
+                  // Your configurations...
+//                  toolbar: [
+//                      { name: 'styles', items: ['Font', 'FontSize' ] },
+//                      ['Bold', 'Italic', 'Underline', 'Strike'],
+//                      {name: 'paragraph', items : [ 'NumberedList', 'BulletedList']},
+//                      {name: 'links', items: ['Link', 'Unlink']},
+//                      {name: 'colors', items: [ 'TextColor', 'BGColor' ]}],
+                  // IMPORTANT
+                  // Generally, inline editors are attached exactly at the same position of
+                  // the selected element but in this case it'd work until you start to scroll
+                  // the canvas. For this reason you have to move the RTE's toolbar inside the
+                  // one from GrapesJS. For this purpose we used a plugin which simplify
+                  // this process and move all next CKEditor's toolbars inside our indicated
+                  // element
+                  sharedSpaces: {
+                      top: editor.RichTextEditor.getToolbarEl(),
+                  }
+              });
+
+              this.focus(el, rte); // implemented later
+              return rte;
+          },
+        disable: function(el, rte) {
+            el.contentEditable = false;
+            if (rte && rte.focusManager) {
+                rte.focusManager.blur(true);
+            }
+        },
+
+        focus: function (el, rte) {
+            // Do nothing if already focused
+            if (rte && rte.focusManager.hasFocus) {
+                return;
+            }
+            el.contentEditable = true;
+            rte && rte.focus();
+        },
       });
 
 
