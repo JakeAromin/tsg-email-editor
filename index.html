@@ -13,8 +13,9 @@
 
     <!--<script src="//unpkg.com/grapesjs@0.10.7/dist/grapes.min.js"></script>-->
     <script src="./style/demo/grapes.min.js?v0.12.5"></script>
+    <!--<script src="./src/iefix/grapes.min.js?v0.12.5"></script>-->
     <script src="./dist/grapesjs-preset-newsletter.min.js"></script>
-      <script src="./node_modules/ckeditor/ckeditor.js"></script>
+    <script src="./node_modules/ckeditor/ckeditor.js"></script>
     <script src="./dist/grapesjs-plugin-ckeditor.min.js"></script>
 
     <script src="./src/toastr.min.js"></script>
@@ -535,6 +536,34 @@
 
 
     <script type="text/javascript">
+
+      /* Make IE work */
+
+      if (typeof Object.assign != 'function') {
+          Object.defineProperty(Object, "assign", {
+              value: function assign(target, varArgs) {
+                  'use strict';
+                  if (target == null) {
+                      throw new TypeError('Cannot convert undefined or null to object');
+                  }
+                  var to = Object(target);
+                  for (var index = 1; index < arguments.length; index++) {
+                      var nextSource = arguments[index];
+                      if (nextSource != null) {
+                          for (var nextKey in nextSource) {
+                              if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                                  to[nextKey] = nextSource[nextKey];
+                              }
+                          }
+                      }
+                  }
+                  return to;
+              },
+              writable: true,
+              configurable: true
+          });
+      }
+
 //      var host = 'http://artf.github.io/grapesjs/';
       var host = './img/';
       var images = [
