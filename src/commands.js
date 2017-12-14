@@ -6,8 +6,8 @@ define(function() {
     let exportCommand = require('./openExportCommand');
     let tglImagesCommand = require('./toggleImagesCommand');
 
-    let addMtCommand = require('./AddMergeTagCommand');
-    let addCiCommand = require('./AddCollectionIterationCommand');
+    let addMtCommand = require('./commands/AddMergeTagCommand');
+    let addCiCommand = require('./commands/AddCollectionIterationCommand');
 
     cmdm.add(opt.cmdOpenImport, importCommand(opt));
     cmdm.add(opt.cmdTglImages, tglImagesCommand(opt));
