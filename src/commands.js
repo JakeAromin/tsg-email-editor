@@ -2,8 +2,8 @@ define(function() {
   return (opt = {}) => {
     let editor = opt.editor;
     let cmdm = editor.Commands;
-    let importCommand = require('./openImportCommand');
-    let exportCommand = require('./openExportCommand');
+    let importCommand = require('./commands/openImportCommand');
+    let exportCommand = require('./commands/openExportCommand');
     let tglImagesCommand = require('./toggleImagesCommand');
 
     let addMtCommand = require('./commands/AddMergeTagCommand');
