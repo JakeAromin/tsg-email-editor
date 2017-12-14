@@ -1,6 +1,5 @@
 .DS_Store
 private/
-js/
 node_modules/
 .eslintrc
 *.log
