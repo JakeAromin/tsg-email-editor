@@ -12,6 +12,26 @@ define(function() {
     let editor = opt.editor;
     let pnm = editor.Panels;
     let optPanel = pnm.getPanel('options');
+
+    // todo: Add Merge tags and collection iterations
+    pnm.addButton('options', {
+      id: opt.modalLabelAddMergeTag,
+      className: 'fa fa-download',
+      // command to be added
+      command: 'c_add_merge_tag',
+      attributes : { title: 'Add new merge tag'},
+      // active: true
+    });
+    pnm.addButton('options', {
+      id: opt.modalLabelAddIteration,
+      className: 'fa fa-download',
+      // command to be added
+      command: 'c_add_collection_iteration',
+      attributes: { title: 'Add new collection iteration'},
+      // active: true
+    });
+    // todo: Add Merge tags and collection iterations
+
     pnm.addButton('options', {
       id: opt.cmdOpenImport,
       className: 'fa fa-download',

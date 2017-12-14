@@ -5,6 +5,10 @@ define(function() {
     let importCommand = require('./openImportCommand');
     let exportCommand = require('./openExportCommand');
     let tglImagesCommand = require('./toggleImagesCommand');
+
+    let addMtCommand = require('./AddMergeTagCommand');
+    let addCiCommand = require('./AddCollectionIterationCommand');
+
     cmdm.add(opt.cmdOpenImport, importCommand(opt));
     cmdm.add(opt.cmdTglImages, tglImagesCommand(opt));
 
@@ -12,6 +16,11 @@ define(function() {
     // (default commands are loaded after plugins)
     editor.on('load', () => {
       cmdm.add('export-template', exportCommand(opt));
+      
+      // todo: Add commands for buttons of 'add new merge tags' and 'add new iteration'
+      cmdm.add('c_add_merge_tag', addMtCommand(opt));
+      cmdm.add('c_add_collection_iteration', addCiCommand(opt));
+      // todo: Add commands for buttons of 'add new merge tags' and 'add new iteration'
     });
 
     cmdm.add('undo', {

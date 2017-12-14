@@ -17,6 +17,7 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
     cmdBtnMobileLabel: 'Mobile',
     modalTitleImport: 'Import template',
     modalTitleExport: 'Export template',
+    // todo: 
     modalLabelImport: '',
     modalLabelExport: '',
     modalBtnImport: 'Import',

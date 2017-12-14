@@ -231,7 +231,7 @@ define(function() {
         icon: `<select class="gjs-field">
                 <option value="">- Select -</option>
             <option value="<span contenteditable='false'>[[firstname]]</span>">FirstName</option>
-            <option value="[[lastname]]">LastName</option>
+            <option value="[[ ]]">LastName</option>
             <option value="[[age]]">Age</option>
         </select>`,
         // Bind the 'result' on 'change' listener
