@@ -52,11 +52,11 @@ define(function () {
     container.appendChild(btnImp);
 
     btnImp.onclick = () => {
-      alert("Add merge tag button pressed");
       // todo: Saving the merge tag
+      let kVal = tb_key.value;
+      let vVal = "{{ " + tb_value.value + " }}";
 
-
-
+      alert("New merge tag -  " + kVal + ": " + vVal + " is saved!");
 
       editor.Modal.close();
     };
