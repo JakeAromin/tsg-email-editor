@@ -19,7 +19,7 @@ define(function() {
       className: 'fa fa-download',
       // command to be added
       command: 'c_add_merge_tag',
-      attributes : { title: 'Add new merge tag'},
+      attributes : { title: 'Add new merge tag' },
       // active: true
     });
     pnm.addButton('options', {
