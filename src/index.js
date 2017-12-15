@@ -17,10 +17,17 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
     cmdBtnMobileLabel: 'Mobile',
     modalTitleImport: 'Import template',
     modalTitleExport: 'Export template',
-    // todo: 
+    // todo: Merge tag and collection iteration
+    modalTitleMT: 'Add new merge tag',
+    modalTitleCI: 'Add new collection iteration',
+    modalLabelMT: '',
+    modalLabelCI: '',
+    // todo: Merge tag and collection iteration
     modalLabelImport: '',
     modalLabelExport: '',
     modalBtnImport: 'Import',
+    modalBtnAddMT: 'Add the merge tag',
+    modalBtnAddCI: 'Add the collection iteration',
     codeViewerTheme: 'hopscotch',
     openBlocksBtnTitle: c.openBlocksBtnTitle || '',
     openLayersBtnTitle: c.openLayersBtnTitle || '',
@@ -60,104 +67,104 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
     listItemsBlkLabel: 'List Items',
     assetsModalTitle: c.assetsModalTitle || 'Select image',
     styleManagerSectors: [{
-        name: 'Dimension',
-        open: false,
-        buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding'],
-        properties:[{
-          property: 'margin',
-          properties:[
-            { name: 'Top', property: 'margin-top'},
-            { name: 'Left', property: 'margin-left'},
-            { name: 'Right', property: 'margin-right'},
-            { name: 'Bottom', property: 'margin-bottom'}
-          ],
-        },{
-          property  : 'padding',
-          properties:[
-            { name: 'Top', property: 'padding-top'},
-            { name: 'Right', property: 'padding-right'},
-            { name: 'Bottom', property: 'padding-bottom'},
-            { name: 'Left', property: 'padding-left'}
-          ],
-        }],
-      },{
-        name: 'Typography',
-        open: false,
-        buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align', 'text-decoration', 'font-style', 'vertical-align', 'text-shadow'],
-        properties:[
-          { name: 'Font', property: 'font-family'},
-          { name: 'Weight', property: 'font-weight'},
-          { name: 'Font color', property: 'color'},
-          {
-            property: 'text-align',
-            type: 'radio',
-            defaults: 'left',
-            list: [
-              { value: 'left', name: 'Left', className: 'fa fa-align-left'},
-              { value: 'center', name: 'Center', className: 'fa fa-align-center' },
-              { value: 'right', name: 'Right', className: 'fa fa-align-right'},
-              { value: 'justify', name: 'Justify', className: 'fa fa-align-justify'}
-            ],
-          },{
-            property: 'text-decoration',
-            type: 'radio',
-            defaults: 'none',
-            list: [
-              { value: 'none', name: 'None', className: 'fa fa-times'},
-              { value: 'underline', name: 'underline', className: 'fa fa-underline' },
-              { value: 'line-through', name: 'Line-through', className: 'fa fa-strikethrough'}
-            ],
-          },{
-            property: 'font-style',
-            type: 'radio',
-            defaults: 'normal',
-            list: [
-              { value: 'normal', name: 'Normal', className: 'fa fa-font'},
-              { value: 'italic', name: 'Italic', className: 'fa fa-italic'}
-            ],
-          },{
-            property: 'vertical-align',
-            type: 'select',
-            defaults: 'baseline',
-            list: [
-              { value: 'baseline'},
-              { value: 'top'},
-              { value: 'middle'},
-              { value: 'bottom'}
-            ],
-          },{
-            property: 'text-shadow',
-            properties: [
-              { name: 'X position', property: 'text-shadow-h'},
-              { name: 'Y position', property: 'text-shadow-v'},
-              { name: 'Blur', property: 'text-shadow-blur'},
-              { name: 'Color', property: 'text-shadow-color'}
-            ],
-        }],
-      },{
-        name: 'Decorations',
-        open: false,
-        buildProps: ['background-color', 'border-collapse', 'border-radius', 'border', 'background'],
-        properties: [{
-          property: 'background-color',
-          name: 'Background',
-        },{
-          property: 'border-radius',
-          properties  : [
-            { name: 'Top', property: 'border-top-left-radius'},
-            { name: 'Right', property: 'border-top-right-radius'},
-            { name: 'Bottom', property: 'border-bottom-left-radius'},
-            { name: 'Left', property: 'border-bottom-right-radius'}
-          ],
-        },{
-          property: 'border-collapse',
+      name: 'Dimension',
+      open: false,
+      buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding'],
+      properties: [{
+        property: 'margin',
+        properties: [
+          { name: 'Top', property: 'margin-top' },
+          { name: 'Left', property: 'margin-left' },
+          { name: 'Right', property: 'margin-right' },
+          { name: 'Bottom', property: 'margin-bottom' }
+        ],
+      }, {
+        property: 'padding',
+        properties: [
+          { name: 'Top', property: 'padding-top' },
+          { name: 'Right', property: 'padding-right' },
+          { name: 'Bottom', property: 'padding-bottom' },
+          { name: 'Left', property: 'padding-left' }
+        ],
+      }],
+    }, {
+      name: 'Typography',
+      open: false,
+      buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align', 'text-decoration', 'font-style', 'vertical-align', 'text-shadow'],
+      properties: [
+        { name: 'Font', property: 'font-family' },
+        { name: 'Weight', property: 'font-weight' },
+        { name: 'Font color', property: 'color' },
+        {
+          property: 'text-align',
           type: 'radio',
-          defaults: 'separate',
+          defaults: 'left',
           list: [
-            { value: 'separate', name: 'No'},
-            { value: 'collapse', name: 'Yes'}
+            { value: 'left', name: 'Left', className: 'fa fa-align-left' },
+            { value: 'center', name: 'Center', className: 'fa fa-align-center' },
+            { value: 'right', name: 'Right', className: 'fa fa-align-right' },
+            { value: 'justify', name: 'Justify', className: 'fa fa-align-justify' }
           ],
-        },
+        }, {
+          property: 'text-decoration',
+          type: 'radio',
+          defaults: 'none',
+          list: [
+            { value: 'none', name: 'None', className: 'fa fa-times' },
+            { value: 'underline', name: 'underline', className: 'fa fa-underline' },
+            { value: 'line-through', name: 'Line-through', className: 'fa fa-strikethrough' }
+          ],
+        }, {
+          property: 'font-style',
+          type: 'radio',
+          defaults: 'normal',
+          list: [
+            { value: 'normal', name: 'Normal', className: 'fa fa-font' },
+            { value: 'italic', name: 'Italic', className: 'fa fa-italic' }
+          ],
+        }, {
+          property: 'vertical-align',
+          type: 'select',
+          defaults: 'baseline',
+          list: [
+            { value: 'baseline' },
+            { value: 'top' },
+            { value: 'middle' },
+            { value: 'bottom' }
+          ],
+        }, {
+          property: 'text-shadow',
+          properties: [
+            { name: 'X position', property: 'text-shadow-h' },
+            { name: 'Y position', property: 'text-shadow-v' },
+            { name: 'Blur', property: 'text-shadow-blur' },
+            { name: 'Color', property: 'text-shadow-color' }
+          ],
+        }],
+    }, {
+      name: 'Decorations',
+      open: false,
+      buildProps: ['background-color', 'border-collapse', 'border-radius', 'border', 'background'],
+      properties: [{
+        property: 'background-color',
+        name: 'Background',
+      }, {
+        property: 'border-radius',
+        properties: [
+          { name: 'Top', property: 'border-top-left-radius' },
+          { name: 'Right', property: 'border-top-right-radius' },
+          { name: 'Bottom', property: 'border-bottom-left-radius' },
+          { name: 'Left', property: 'border-bottom-right-radius' }
+        ],
+      }, {
+        property: 'border-collapse',
+        type: 'radio',
+        defaults: 'separate',
+        list: [
+          { value: 'separate', name: 'No' },
+          { value: 'collapse', name: 'Yes' }
+        ],
+      },
         /*
         { // Too much low support
           property: 'box-shadow',
@@ -170,23 +177,23 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
             { name: 'Shadow type', property: 'box-shadow-type'}
           ],
         },*/{
-          property: 'border',
-          properties: [
-            { name: 'Width', property: 'border-width', defaults: '0'},
-            { name: 'Style', property: 'border-style'},
-            { name: 'Color', property: 'border-color'},
-          ],
-        },{
-          property: 'background',
-          properties: [
-            { name: 'Image', property: 'background-image'},
-            { name: 'Repeat', property:   'background-repeat'},
-            { name: 'Position', property: 'background-position'},
-            { name: 'Attachment', property: 'background-attachment'},
-            { name: 'Size', property: 'background-size'}
-          ],
-        }],
-      }]
+        property: 'border',
+        properties: [
+          { name: 'Width', property: 'border-width', defaults: '0' },
+          { name: 'Style', property: 'border-style' },
+          { name: 'Color', property: 'border-color' },
+        ],
+      }, {
+        property: 'background',
+        properties: [
+          { name: 'Image', property: 'background-image' },
+          { name: 'Repeat', property: 'background-repeat' },
+          { name: 'Position', property: 'background-position' },
+          { name: 'Attachment', property: 'background-attachment' },
+          { name: 'Size', property: 'background-size' }
+        ],
+      }],
+    }]
   };
 
   // Change some config
@@ -215,7 +222,7 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
   importStyle(c);
 
   // Set default template if the canvas is empty
-  if(!editor.getHtml() && c.defaultTemplate){
+  if (!editor.getHtml() && c.defaultTemplate) {
     editor.setComponents(c.defaultTemplate);
 
     // Init components for Undo Manager
@@ -223,15 +230,15 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
   }
 
   // On component change show the Style Manager
-  editor.on('change:selectedComponent', function() {
+  editor.on('change:selectedComponent', function () {
     var openLayersBtn = editor.Panels.getButton('views', 'open-layers');
 
     // Don't switch when the Layer Manager is on or
     // there is no selected component
-    if((!openLayersBtn || !openLayersBtn.get('active')) &&
-      editor.editor.get('selectedComponent')){
+    if ((!openLayersBtn || !openLayersBtn.get('active')) &&
+      editor.editor.get('selectedComponent')) {
       var openSmBtn = editor.Panels.getButton('views', 'open-sm');
-      openSmBtn.set('attributes',{ title:defaults.openSmBtnTitle });
+      openSmBtn.set('attributes', { title: defaults.openSmBtnTitle });
       openSmBtn && openSmBtn.set('active', 1);
     }
   });
@@ -243,7 +250,7 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
 
 
   // Do stuff on load
-  editor.on('load', function() {
+  editor.on('load', function () {
     var expTplBtn = editor.Panels.getButton('options', 'export-template');
     expTplBtn.set('attributes', {
       title: defaults.expTplBtnTitle
@@ -270,7 +277,7 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
     });
     // Open block manager
     var openBlocksBtn = editor.Panels.getButton('views', 'open-blocks');
-      openBlocksBtn.set('attributes', {
+    openBlocksBtn.set('attributes', {
       title: defaults.openBlocksBtnTitle
     });
     openBlocksBtn && openBlocksBtn.set('active', 1);

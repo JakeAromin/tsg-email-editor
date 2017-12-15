@@ -1,52 +1,85 @@
-define(function() {
-    const juice = require('juice');
-    return (opt = {}) => {
-      let editor = opt.editor;
-      let codeViewer = editor && editor.CodeManager.getViewer('CodeMirror').clone();
-      let container = document.createElement("div");
-      let pfx = opt.pfx || '';
-      var cmdm = editor.Commands;
-      // Init code viewer
-      codeViewer.set({
-        codeName: 'htmlmixed',
-        theme: opt.codeViewerTheme,
-      });
-      // Set the command which could be used outside
-      cmdm.add(pfx + 'get-inlined-html', {
-        run(editor) {
-          const tmpl = editor.getHtml() + `<style>${editor.getCss()}</style>`;
-          return juice(tmpl);
-        }
-      })
-      return {
-        run(editor, sender) {
-          let result = '';
-          let md = editor.Modal;
-          let modalContent = md.getContentEl();
-          let viewer = codeViewer.editor;
-          md.setTitle(opt.modalTitleExport);
-          // Init code viewer if not yet instantiated
-          if(!viewer){
-            let txtarea = document.createElement('textarea');
-            if(opt.modalLabelExport){
-              let labelEl = document.createElement('div');
-              labelEl.className = pfx + 'export-label';
-              labelEl.innerHTML = opt.modalLabelExport;
-              container.appendChild(labelEl);
-            }
-            container.appendChild(txtarea);
-            codeViewer.init(txtarea);
-            viewer = codeViewer.editor;
-            viewer.setOption('lineWrapping', 1);
-          }
-          md.setContent(container);
-          const tmpl = editor.getHtml() + `<style>${editor.getCss()}</style>`;
-          codeViewer.setContent(opt.inlineCss ? juice(tmpl) : tmpl);
-          md.open();
-          viewer.refresh();
-          sender && sender.set && sender.set('active', 0);
-        },
-      }
+define(function () {
+  return (opt = {}) => {
+    /* var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}; */
+
+    let editor = opt.editor;
+    let pfx = opt.pfx || ''; // gjs-
+
+    /* Init the container */
+    let container = document.createElement("div"); // <div></div>
+
+    if (opt.modalLabelAddMergeTag) { // 'Input the key and value of the new merge tag'
+      let labelEl = document.createElement('div');
+      labelEl.className = pfx + 'new-mt';
+      labelEl.innerHTML = opt.modalLabelAddMergeTag;
+      container.appendChild(labelEl);
+    }
+
+    /* Init the labels and text-inputs */
+    let tb_key = document.createElement("input");
+    tb_key.setAttribute("type", "text");
+    let label_key = document.createElement("label");
+    let text_key = document.createTextNode("Tag Key: ");
+    label_key.appendChild(text_key);
+
+    let tb_value = document.createElement("input");
+    tb_value.setAttribute("type", "text");
+    let label_value = document.createElement("label");
+    let text_value = document.createTextNode("Tag Value: ");
+    label_value.appendChild(text_value);
+
+    /* Init add merge tag button */
+    let btnImp = document.createElement("button"); // <button class="gjs-btn-prim gjs-btn-import">Add the merge tag</button>
+    btnImp.innerHTML = opt.modalBtnAddMT; // 'Add the merge tag'
+    btnImp.className = pfx + 'btn-prim ' + pfx + 'btn-new-mt';
+
+    let br_1 = document.createElement("br");
+    let br_2 = document.createElement("br");
+    let br_3 = document.createElement("br");
+    let br_4 = document.createElement("br");
+    let br_5 = document.createElement("br");
+    let br_6 = document.createElement("br");
+    container.appendChild(label_key);
+    container.appendChild(br_1);
+    container.appendChild(tb_key);
+    container.appendChild(br_2);
+    container.appendChild(br_3);
+    container.appendChild(label_value);
+    container.appendChild(br_4);
+    container.appendChild(tb_value);
+    container.appendChild(br_5);
+    container.appendChild(br_6);
+    container.appendChild(btnImp);
+
+    btnImp.onclick = () => {
+      alert("Add merge tag button pressed");
+      // todo: Saving the merge tag
+
+
+
+
+      editor.Modal.close();
     };
-  });
-  
+
+    /* return when the button pressed */
+    return {
+      run(editor, sender) {
+        console.log("logging the editor in return block");
+        console.log(editor);
+        console.log("logging the sender in return block");
+        console.log(sender);
+
+        let md = editor.Modal;
+
+        md.setTitle(opt.modalTitleMT); // 'Add new merge tag'
+
+        let modalContent = md.getContentEl(); // The container
+
+        md.setContent('');
+        md.setContent(container);
+        md.open();
+        sender && sender.set('active', 0);
+      },
+    }
+  };
+});

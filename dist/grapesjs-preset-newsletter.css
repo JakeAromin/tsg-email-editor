@@ -62,12 +62,14 @@
 .sp-container {
   background-color: #373d49; }
 
+.gjs-new-mt,
+.gjs-new-ci,
 .gjs-import-label,
 .gjs-export-label {
   margin-bottom: 10px;
   font-size: 13px; }
 
-.gjs-mdl-dialog .gjs-btn-import {
+.gjs-mdl-dialog .gjs-btn-import .gjs-btn-new-mt .gjs-btn-new-ci {
   margin-top: 10px; }
 
 .CodeMirror {
