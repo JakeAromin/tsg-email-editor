@@ -58,12 +58,6 @@ define(function() {
         </tr>
         </table>`,
     });
-    bm.add('button', {
-      label: opt.buttonBlkLabel,
-      category: opt.categoryLabel,
-      content: '<a class="button">Button</a>',
-      attributes: {class:'gjs-fonts gjs-f-button'}
-    });
     bm.add('divider', {
       label: opt.dividerBlkLabel,
       category: opt.categoryLabel,
@@ -123,77 +117,10 @@ define(function() {
         style: {color:'#3b97e3'}
       },
     });
-    bm.add('link-block', {
-      label: opt.linkBlockBlkLabel,
-      category: opt.categoryLabel,
-      attributes: {class:'fa fa-link'},
-      content: {
-        type: 'link',
-        editable: false,
-        droppable: true,
-        style: {
-          display: 'inline-block',
-          padding: '5px',
-          'min-height': '50px',
-          'min-width': '50px'
-        }
-      },
-    });
-    let gridItem =
-      `<table class="grid-item-card">
-        <tr>
-          <td class="grid-item-card-cell">
-            <img class="grid-item-image" src="http://placehold.it/250x150/78c5d6/fff/" alt="Image"/>
-            <table class="grid-item-card-body">
-              <tr>
-                <td class="grid-item-card-content">
-                  <h1 class="card-title">Title here</h1>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>`;
-    bm.add('grid-items', {
-      label: opt.gridItemsBlkLabel,
-      category: opt.categoryLabel,
-      content: `<table class="grid-item-row">
-        <tr>
-          <td class="grid-item-cell2-l">${gridItem}</td>
-          <td class="grid-item-cell2-r">${gridItem}</td>
-        </tr>
-      </table>`,
-      attributes: {class:'fa fa-th'}
-    });
-    let listItem =
-      `<table class="list-item">
-        <tr>
-          <td class="list-item-cell">
-            <table class="list-item-content">
-              <tr class="list-item-row">
-                <td class="list-cell-left">
-                  <img class="list-item-image" src="http://placehold.it/150x150/78c5d6/fff/" alt="Image"/>
-                </td>
-                <td class="list-cell-right">
-                  <h1 class="card-title">Title here</h1>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>`;
-    bm.add('list-items', {
-      label: opt.listItemsBlkLabel,
-      category: opt.categoryLabel,
-      content: listItem + listItem,
-      attributes: {class:'fa fa-th-list'}
-    });
 
     bm.add('unEditableText', {
         label: 'Un-Editable',
-        //category: opt.categoryLabel,
+        category: 'Read-Only Blocks',
         attributes: {class:'gjs-fonts gjs-f-text'},
         content: {
             title: 'Insert the iteration here',
@@ -210,6 +137,7 @@ define(function() {
     bm.add('paymentDetails', {
         label: 'Payment Details',
         //category: opt.categoryLabel,
+        category: 'Iterations',
         attributes: {class:'gjs-fonts gjs-f-text'},
         content: {
             title: 'Insert the iteration here',
